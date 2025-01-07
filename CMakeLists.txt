@@ -7,5 +7,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(ClipboardManager ClipboardManager.cpp)
 
-set_target_properties(ClipboardManager PROPERTIES WIN32_EXECUTABLE NO)
+set_target_properties(ClipboardManager PROPERTIES WIN32_EXECUTABLE YES)
 
