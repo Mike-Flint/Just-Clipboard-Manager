@@ -8,4 +8,4 @@ add_executable(ClipboardManager ClipboardManager.cpp)
 
 set_target_properties(ClipboardManager PROPERTIES WIN32_EXECUTABLE YES)
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
