@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 
+// Settings
 #define ClipboardCheck 500
 #define CopySpeed 700
 #define NumberObjects 15
@@ -38,7 +39,7 @@ void loadFromFile(vecStr& vectorText){
     }  
 }
 
-void CopyToClipboard(std::string& text){
+void CopyToClipboard(const std::string& text){
     if (OpenClipboard(nullptr)){
         EmptyClipboard();
         HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, text.size() + 1);
@@ -51,7 +52,7 @@ void CopyToClipboard(std::string& text){
     CloseClipboard();
 }
 
-void saveToFile(vecStr& dataCollection){
+void saveToFile(const vecStr& dataCollection){
    std::ofstream outFile(NameBuffer, std::ios::binary);
    if(outFile){
         size_t size = dataCollection.size();
@@ -68,8 +69,9 @@ void saveToFile(vecStr& dataCollection){
    }
 }
 
-void SaveClipboardText(std::string& text , bool& checkError ,
+void SaveClipboardText( std::string& text , bool& checkError ,
     HANDLE& hData, char*& pszText,vecStr& clipboardHistory){
+    // Query the last copied text in the clipboard
     checkError = true;
     if(OpenClipboard(nullptr)){
         hData = GetClipboardData(CF_TEXT);
@@ -87,23 +89,28 @@ void SaveClipboardText(std::string& text , bool& checkError ,
         return;
     }
     
+    // Checking text from the clipboard
     if (!text.empty() && (clipboardHistory.empty() || clipboardHistory.front() != text) && 
     std::find(clipboardHistory.begin(), clipboardHistory.end(), text) == clipboardHistory.end()){
         if (clipboardHistory.size() >= NumberObjects){
             clipboardHistory.back() = text;
             std::rotate(clipboardHistory.rbegin(), clipboardHistory.rbegin() + 1, clipboardHistory.rend());
+            // Saving a vector to a file
             saveToFile(clipboardHistory);
         }else{
             clipboardHistory.insert(clipboardHistory.begin(), text);
+            // Saving a vector to a file
             saveToFile(clipboardHistory);
         }
     }
 }
 
 int main(){
+    // Load data from a file or create a new file
     vecStr clipboardHistory;
     loadFromFile(clipboardHistory);
     
+    // Loading data from a file to the clipboard
     for(vecStr::reverse_iterator it = clipboardHistory.rbegin(); 
     it != clipboardHistory.rend();
     ++it){
@@ -111,16 +118,19 @@ int main(){
         Sleep(CopySpeed);
     }
 
+    // Initializing variables
     std::string ClipboardText;
     bool checkError = true;
     HANDLE hData;
     char* pszText;
 
+    // Clipboard monitoring
     while(StartStop){
         SaveClipboardText(ClipboardText, checkError, hData , pszText, clipboardHistory);
         Sleep(ClipboardCheck);
     }
 
+    // Error message
     MessageBox(NULL, messageErrore.c_str(), "The program has stopped working", MB_ICONERROR | MB_OK);
     return 0;
 }
