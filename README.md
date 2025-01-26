@@ -50,6 +50,6 @@ A lightweight clipboard manager for Windows that saves your text copy history to
 git clone https://github.com/Mike-Flint/Just-Clipboard-Manager.git
 cd Just-Clipboard-Manager
 
-cmake -S . -B build
+cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++
 cmake --build build
 ```
