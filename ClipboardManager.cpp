@@ -34,7 +34,7 @@ int main(){
     } 
     catch (const std::exception& e) {
         // Error message
-        MessageBox(NULL, e.what(), "Error", MB_ICONERROR | MB_OK);
+        MessageBox(NULL, e.what(), "Clipboard Manager - Error", MB_ICONERROR | MB_OK);
     }
     return 0;
 }
