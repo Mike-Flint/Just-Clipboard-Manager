@@ -58,19 +58,19 @@ void ClipMonitor::check(){
 }
 
 void ClipMonitor::saveToFile(const vecStr& dataCollection){
-   std::ofstream outFile(bufferPath, std::ios::binary | std::ios::trunc);
-   if(outFile){
-        size_t size = clipboardHistory.size();
-        outFile.write(reinterpret_cast<const char*>(&size), sizeof(size));
-        for (const std::wstring& str : clipboardHistory){
-            size_t length = str.size();
-            outFile.write(reinterpret_cast<const char*>(&length), sizeof(length));
-            outFile.write(reinterpret_cast<const char*>(str.c_str()), length * sizeof(wchar_t));
-        }
-        outFile.close();
-   }else{
-        throw std::runtime_error("Failed to save data to file.");
-   }
+    std::ofstream outFile(bufferPath, std::ios::binary | std::ios::trunc);
+    if(outFile){
+            size_t size = clipboardHistory.size();
+            outFile.write(reinterpret_cast<const char*>(&size), sizeof(size));
+            for (const std::wstring& str : clipboardHistory){
+                size_t length = str.size();
+                outFile.write(reinterpret_cast<const char*>(&length), sizeof(length));
+                outFile.write(reinterpret_cast<const char*>(str.c_str()), length * sizeof(wchar_t));
+            }
+            outFile.close();
+    }else{
+            throw std::runtime_error("Failed to save data to file.");
+    }
 }
 
 void ClipMonitor::loadFromFile(){
@@ -79,6 +79,7 @@ void ClipMonitor::loadFromFile(){
         std::size_t size;
         inFile.read(reinterpret_cast<char*>(&size), sizeof(size));
         clipboardHistory.resize(size);
+
         for (std::wstring& str: clipboardHistory){
             std::size_t length;
             inFile.read(reinterpret_cast<char*>(&length), sizeof(length));

@@ -29,11 +29,11 @@ public:
     vecStr clipboardHistory;
 
     ClipMonitor( const unsigned short& copySpeed, const unsigned short& numberObjects, const char* nameBuffer):
-                 numberObjects(numberObjects),
-                 copySpeed(copySpeed),
-                 nameBuffer(nameBuffer){
-                    initPath();
-                 };
+                    numberObjects(numberObjects),
+                    copySpeed(copySpeed),
+                    nameBuffer(nameBuffer){
+                        initPath();
+                    };
 
     void checkIfRunning();
     void addAppToStartup();
@@ -42,7 +42,6 @@ public:
     void copyToClipboard();
 
     void check();
-   
 };
 
 #endif
