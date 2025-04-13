@@ -13,7 +13,7 @@ A lightweight clipboard manager for Windows that saves your text copy history to
 3. **History Restoration**  
    Loads saved data from the `data.bin` file and places it in the clipboard.
 4. **Real-Time Monitoring**  
-   Checks for clipboard changes every 500 ms.
+   Checks for clipboard changes.
 
 ---
 
